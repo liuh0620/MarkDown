@@ -23,15 +23,33 @@
     D-->A
     ```
 
+    ```mermaid
+    graph LR;
+    A-->B
+    B-->C
+    C-->D
+    D-->A
+    ```
+
 2. 节点的形状
     - 默认节点 A
-    - 文本节点 B[bname]   
+    - 文本节点 B[bname]
     - 圆角节点 C(cname)
     - 圆形节点 D((dname))  
     - 非对称节点 E>ename]  
     - 菱形节点 F{fname}
 
     ```mermaid{code_block=true}
+    graph TB
+    A
+    B[bname]
+    C(cname)
+    D((dname))
+    E>ename]
+    F{fname}
+    ```
+
+    ```mermaid
     graph TB
     A
     B[bname]
@@ -72,9 +90,33 @@
     A12==text==>B12
     ```
 
+    ```mermaid
+    graph TB
+    A1-->B1
+    A2---B2
+    A3--text---B3
+    A4--text-->B4
+    A5---B5
+    A6-.->B6
+    A7-.text.-B7
+    A8-.text.->B8
+    A9===B9
+    A10==>B10
+    A11==text===B11
+    A12==text==>B12
+    ```
+
 4. 综合示例：
 
     ```mermaid {code_block=true}
+     graph LR
+     start(input x)-->handler(x>0?)
+     handler --yes--> yes("output x")
+     handler --no--> start
+     yes --> exit("exit")
+     ```
+
+    ```mermaid
      graph LR
      start(input x)-->handler(x>0?)
      handler --yes--> yes("output x")
@@ -95,6 +137,20 @@
      ...
 
     ```mermaid{code_block=true}
+    graph LR
+      subgraph g1
+        a1-->b1
+     end
+     subgraph g2
+        a2-->b2
+     end
+     subgraph g3
+       a3-->b3
+     end
+     a3-->a2
+   ```
+
+    ```mermaid
     graph LR
       subgraph g1
         a1-->b1
@@ -161,7 +217,40 @@
     　end
     ```
 
+    ```mermaid
+    sequenceDiagram
+      Alice->>Bob: Hello Bob, how are you?
+      alt is sick
+        Bob->>Alice:not so good
+      else is well
+    　  Bob->>Alice:good
+      end
+      opt Extra response
+    　  Bob->>Alice:Thanks for asking
+    　end
+    ```
+
   ```mermaid{code_block=true}
+   sequenceDiagram
+    Note right of A: 倒霉, 碰到B了
+    A->B:   Hello B, how are you ?
+    note left of B: 倒霉,碰到A了
+    B-->A:  Fine, thx, and you?
+    note over A,B: 快点溜，太麻烦了
+    A->>B:  I'm fine too.
+    note left of B: 快点打发了A
+    B-->>A: Great!
+    note right of A: 溜之大吉
+    A-xB:   Wait a moment
+    loop Look B every minute
+  　  A->>B: look B, go?
+  　　B->>A: let me go?
+  　end
+  　B--xA: I'm off, byte 　
+    note right of A: 太好了, 他走了
+  ```
+
+  ```mermaid
    sequenceDiagram
     Note right of A: 倒霉, 碰到B了
     A->B:   Hello B, how are you ?
@@ -205,7 +294,45 @@
     note right of A: 太好了, 他走了
   ```
 
+  ```mermaid
+  sequenceDiagram
+  participant B
+  participant A
+    Note right of A: 倒霉, 碰到B了
+    A->B:   Hello B, how are you ?
+    note left of B: 倒霉,碰到A了
+    B-->A:  Fine, thx, and you?
+    note over A,B: 快点溜，太麻烦了
+    A->>B:  I'm fine too.
+    note left of B: 快点打发了A
+    B-->>A: Great!
+    note right of A: 溜之大吉
+    A-xB:   Wait a moment
+    loop Look B every minute
+  　  A->>B: look B, go?
+  　　B->>A: let me go?
+  　end
+  　B--xA: I'm off, byte 　
+    note right of A: 太好了, 他走了
+  ```
+
 ```mermaid{code_block=true}
+sequenceDiagram
+  # 通过设定参与者(participants)的顺序控制展示模块顺序
+  participant Alice
+　participant Bob
+　participant John
+　Alice->John:Hello John, how are you?
+　loop Healthcheck
+　  John->John:Fight against hypochondria
+　end
+　Note right of John:Rational thoughts <br/>prevail...
+　John-->Alice:Great!
+　John->Bob: How about you?
+　Bob-->John: good!
+```
+
+```mermaid
 sequenceDiagram
   # 通过设定参与者(participants)的顺序控制展示模块顺序
   participant Alice
@@ -249,7 +376,23 @@ sequenceDiagram
   op=>operation: 输入x
   sub=>subroutine: 是否重新输入
   cond1=>condition: x>0?
-  cond2=>condition: yes/no 
+  cond2=>condition: yes/no
+  io=>inputoutput: 输出x  
+
+  st->op->cond1
+  cond1(yes)->io(right)->e
+  cond1(no)->sub(right)->cond2()
+  cond2(yes, right)->op
+  cond2(no)->e
+  ```
+
+```flow
+  st=>start: 开始
+  e=>end: 结束
+  op=>operation: 输入x
+  sub=>subroutine: 是否重新输入
+  cond1=>condition: x>0?
+  cond2=>condition: yes/no
   io=>inputoutput: 输出x  
 
   st->op->cond1
